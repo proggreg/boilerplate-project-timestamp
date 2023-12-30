@@ -24,9 +24,28 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+app.get("/api/2015-12-25", function (req, res) {
+  // console.log(req)
+  let path = req.path
+  let parseDate = path.split('/').pop()
+  console.log(parseDate)
+  let date = new Date(parseDate)
+  console.log(date)
+  date.getDate()
+  
+  res.json({"unix": Math.floor(date), "utc": date.toUTCString()});
+});
+
+app.get("/api/1451001600000", function (req, res) {
+  let path = req.path
+  let unixTime = parseInt(path.split('/').pop())
+  let date = new Date(unixTime)
+  res.json({"unix": Math.floor(date), "utc": date.toUTCString()});
+});
+
 
 
 // listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
+var listener = app.listen(3001, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
